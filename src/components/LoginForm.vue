@@ -114,4 +114,34 @@ const clearForm = () => {
 .list-group-item {
     padding: 10px;
 }
+
+/* Media Queries */
+@media screen and (min-width: 1024px) {
+
+    /* Desktop */
+    .container {
+        max-width: 80%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    /* Tablet */
+    .container {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    /* Smartphone */
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
 </style>
