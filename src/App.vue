@@ -2,6 +2,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import JSON from './components/JSON.vue'
+import LoginForm from './components/LoginForm.vue'
 </script>
 
 <template>
@@ -14,8 +15,9 @@ import JSON from './components/JSON.vue'
   </header>
 
   <main>
-    <TheWelcome />
-    <JSON />
+    <!--<TheWelcom /> -->
+    <!--<JSON /> -->
+    <LoginForm />
   </main>
 </template>
 
