@@ -85,7 +85,7 @@ const submitForm = () => {
         ...formData.value
 
     });
-    clearForm(); // Clear form after submission
+    // clearForm(); // Clear form after submission
 };
 
 const clearForm = () => {
