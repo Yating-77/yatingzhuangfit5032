@@ -52,7 +52,7 @@
                 </form>
             </div>
         </div>
-    </div>
+        <!-- </div>
     <div class="row mt-5" v-if="submittedCards.length">
         <div class="d-flex flex-wrap justify-content-start">
             <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
@@ -68,9 +68,17 @@
                 </ul>
             </div>
         </div>
+    </div> -->
+        <div class="row mt-5" v-if="users.length">
+            <DataTable :value="users">
+                <Column field="username" header="Username"></Column>
+                <Column field="password" header="Password"></Column>
+                <Column field="isAustralian" header="Australian Resident"></Column>
+                <Column field="gender" header="Gender"></Column>
+                <Column field="reason" header="Reason for Joining"></Column>
+            </DataTable>
+        </div>
     </div>
-
-
 </template>
 
 
@@ -79,7 +87,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
+const users = ref([]);
 const formData = ref({
     username: '',
     password: '',
@@ -88,7 +99,26 @@ const formData = ref({
     gender: ''
 });
 
-const submittedCards = ref([]);
+// const submittedCards = ref([]);
+
+// const submitForm = () => {
+//     validateName(true);
+//     validatePassword(true);
+//     validateAustralianResident();
+//     validateGender(true);
+//     validateReason(true);
+//     if (!errors.value.username && !errors.value.password &&
+//         !errors.value.isAustralian && !errors.value.gender &&
+//         !errors.value.reason) {
+//         submittedCards.value.push({
+//             ...formData.value
+//         });
+//         clearForm();
+//     }
+// };
+
+
+
 
 const submitForm = () => {
     validateName(true);
@@ -96,16 +126,21 @@ const submitForm = () => {
     validateAustralianResident();
     validateGender(true);
     validateReason(true);
+
     if (!errors.value.username && !errors.value.password &&
         !errors.value.isAustralian && !errors.value.gender &&
         !errors.value.reason) {
-        submittedCards.value.push({
-            ...formData.value
+        users.value.push({
+            username: formData.value.username,
+            password: formData.value.password,
+            isAustralian: formData.value.isAustralian,
+            gender: formData.value.gender,
+            reason: formData.value.reason
         });
+        console.log(users.value); // Add this line to check the content of users array
         clearForm();
     }
 };
-
 const clearForm = () => {
     formData.value.username = '';
     formData.value.password = '';
