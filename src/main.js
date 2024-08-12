@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const app = createApp(App);
 
-// Register PrimeVue and components
 app.use(PrimeVue, {
     theme: {
         preset: Aura
