@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "@primevue/themes": "^4.0.4",
+    "@vee-validate/rules": "^4.13.2",
     "primevue": "^4.0.4",
+    "vee-validate": "^4.13.2",
     "vue": "^3.4.29",
+    "yup": "^1.4.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

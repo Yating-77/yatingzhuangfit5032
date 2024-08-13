@@ -7,40 +7,36 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" v-model="usernameValidator.value"
-                                v-bind="usernameValidator.attrs" />
-                            <div v-if="usernameValidator.error" class="text-danger">{{ usernameValidator.error }}</div>
+                            <input id="username" type="text" class="form-control" v-model="usernameField.value" />
+                            <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                         </div>
                         <div class="col-md-6">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" v-model="passwordValidator.value"
-                                v-bind="passwordValidator.attrs" />
-                            <div v-if="passwordValidator.error" class="text-danger">{{ passwordValidator.error }}</div>
+                            <input id="password" type="password" class="form-control" v-model="passwordField.value" />
+                            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" v-model="emailValidator.value"
-                                v-bind="emailValidator.attrs" />
-                            <div v-if="emailValidator.error" class="text-danger">{{ emailValidator.error }}</div>
+                            <input id="email" type="email" class="form-control" v-model="emailField.value" />
+                            <div v-if="errors.email" class="text-danger">{{ errors.email }}</div>
                         </div>
                         <div class="col-md-6">
                             <label for="gender" class="form-label">Gender</label>
-                            <select class="form-select" id="gender" v-model="genderValidator.value"
-                                v-bind="genderValidator.attrs">
+                            <select id="gender" class="form-select" v-model="genderField.value">
+                                <option value="" disabled>Select Gender</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
                             </select>
-                            <div v-if="genderValidator.error" class="text-danger">{{ genderValidator.error }}</div>
+                            <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason for joining</label>
-                        <textarea class="form-control" id="reason" v-model="reasonValidator.value"
-                            v-bind="reasonValidator.attrs" rows="3"></textarea>
-                        <div v-if="reasonValidator.error" class="text-danger">{{ reasonValidator.error }}</div>
+                        <textarea id="reason" rows="3" class="form-control" v-model="reasonField.value"></textarea>
+                        <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -52,66 +48,45 @@
     </div>
 </template>
 
-
-
 <script setup>
-import { ref } from 'vue';
+import { useField, useForm } from 'vee-validate';
+import * as yup from 'yup';
 
-function createValidator(initialValue, validate, validateOnBlur = false) {
-    const value = ref(initialValue);
-    const error = ref(undefined);
-
-    const attrs = {
-        onInput: (event) => {
-            value.value = event.target.value;
-            if (!validateOnBlur) {
-                const validationResult = validate(value.value);
-                error.value = validationResult === true ? undefined : validationResult;
-            }
-        },
-        onBlur: () => {
-            const validationResult = validate(value.value);
-            error.value = validationResult === true ? undefined : validationResult;
-        }
-    };
-
-    return { value, error, attrs };
-}
-
-const usernameValidator = createValidator('', (value) => value.length >= 3 ? true : 'Name must be at least 3 characters');
-const passwordValidator = createValidator('', (value) => {
-    if (value.length < 8) return 'Password must be at least 8 characters';
-    if (!/[A-Z]/.test(value)) return 'Password must contain at least one uppercase letter';
-    if (!/[a-z]/.test(value)) return 'Password must contain at least one lowercase letter';
-    if (!/\d/.test(value)) return 'Password must contain at least one number';
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) return 'Password must contain at least one special character';
-    return true;
+// Define validation schema using Yup
+const schema = yup.object({
+    username: yup.string().required('Username is required').min(3, 'Username must be at least 3 characters'),
+    password: yup
+        .string()
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/\d/, 'Password must contain at least one number')
+        .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain at least one special character'),
+    email: yup.string().required('Email is required').email('Invalid email'),
+    gender: yup.string().required('Gender is required'),
+    reason: yup.string().required('Reason is required').min(10, 'Reason must be at least 10 characters long'),
 });
-const emailValidator = createValidator('', (value) => value.includes('@') ? true : 'Invalid email');
-const genderValidator = createValidator('', (value) => value ? true : 'Please select your gender');
-const reasonValidator = createValidator('', (value) => value.length >= 10 ? true : 'Reason must be at least 10 characters long');
 
-const submitForm = () => {
-    if (!usernameValidator.error.value && !passwordValidator.error.value &&
-        !emailValidator.error.value && !genderValidator.error.value && !reasonValidator.error.value) {
-        // Form submission logic here
-        console.log('Form submitted with values:', {
-            username: usernameValidator.value.value,
-            password: passwordValidator.value.value,
-            email: emailValidator.value.value,
-            gender: genderValidator.value.value,
-            reason: reasonValidator.value.value
-        });
-        clearForm();
-    }
-};
+// Set up form with vee-validate
+const { handleSubmit, resetForm, errors } = useForm({
+    validationSchema: schema,
+});
+
+// Bind fields to their respective validation logic
+const usernameField = useField('username');
+const passwordField = useField('password');
+const emailField = useField('email');
+const genderField = useField('gender');
+const reasonField = useField('reason');
+
+const submitForm = handleSubmit((values) => {
+    console.log('Form submitted with values:', values);
+    clearForm();
+});
 
 const clearForm = () => {
-    usernameValidator.value = '';
-    passwordValidator.value = '';
-    emailValidator.value = '';
-    genderValidator.value = '';
-    reasonValidator.value.value = '';
+    resetForm();
 };
 </script>
 
