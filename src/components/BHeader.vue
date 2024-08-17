@@ -5,9 +5,7 @@
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active" aria-current="page"
-            >Home (Week 5)</router-link
-          >
+          <router-link to="/" class="nav-link" active-class="active" aria-current="page">Home (Week 5)</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/about" class="nav-link" active-class="active">About</router-link>
@@ -19,6 +17,19 @@
     </header>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const isAuthenticated = ref(localStorage.getItem('isAuthenticated') === 'true');
+
+const logout = () => {
+  localStorage.removeItem('isAuthenticated');
+  isAuthenticated.value = false;
+  // Redirect to login page
+  router.push('/login');
+};
+</script>
 
 <style scoped>
 .b-example-divider {
@@ -36,6 +47,7 @@
   background-color: var(--bs-dark);
   border-color: var(--bs-gray);
 }
+
 .form-control-dark:focus {
   color: #fff;
   background-color: var(--bs-dark);
