@@ -44,6 +44,4 @@ const login = () => {
 };
 </script>
 
-<style scoped>
-/* Add any necessary styles here */
-</style>
+<style scoped></style>
