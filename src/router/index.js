@@ -4,6 +4,7 @@ import AboutView from '../views/AboutView.vue';
 import LoginView from '../views/LoginView.vue';
 import FirebaseSigninView from '@/views/FirebaseSigninView.vue';
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue';
+import LogoutView from '@/views/LogoutView.vue';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/FireRegister',
     name: 'FireRegister',
     component: FirebaseRegisterView,
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    component: LogoutView,
   },
 ];
 
