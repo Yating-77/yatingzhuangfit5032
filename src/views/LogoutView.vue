@@ -24,7 +24,6 @@ const logout = () => {
         .then(() => {
             console.log("User signed out successfully.");
             console.log("Current User after sign out:", auth.currentUser); // This should be null
-            // window.location.href = "/"; // Redirect to home or login page
         })
         .catch((error) => {
             console.log("Sign out error:", error);

@@ -37,6 +37,7 @@ const login = () => {
 
   if (username.value === registeredUsername && password.value === registeredPassword) {
     localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('currentUser', username.value);
     router.push('/about');
   } else {
     errorMessage.value = 'Invalid username or password';

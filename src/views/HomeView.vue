@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-
+import { getAuth } from "firebase/auth";
+const auth = getAuth();
+console.log("home auth", getAuth());
 const formData = ref({
   username: '',
   password: '',
@@ -64,18 +66,18 @@ const validateConfirmPassword = (blur) => {
 };
 
 const validateReason = () => {
-    const reason = formData.value.reason.toLowerCase();
-    if (reason.includes('friend')) {
-        reasonMessage.value = 'Great to have a friend!';
-        errors.value.reason = null;
+  const reason = formData.value.reason.toLowerCase();
+  if (reason.includes('friend')) {
+    reasonMessage.value = 'Great to have a friend!';
+    errors.value.reason = null;
+  } else {
+    reasonMessage.value = '';
+    if (formData.value.reason.length < 10) {
+      errors.value.reason = 'Reason must be at least 10 characters long';
     } else {
-        reasonMessage.value = '';
-        if (formData.value.reason.length < 10) {
-            errors.value.reason = 'Reason must be at least 10 characters long';
-        } else {
-            errors.value.reason = null;
-        }
+      errors.value.reason = null;
     }
+  }
 };
 
 const submitForm = () => {
@@ -129,14 +131,8 @@ const clearForm = () => {
           <div class="row mb-3">
             <div class="col-md-6 col-sm-6">
               <label for="username" class="form-label">Username</label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                @blur="() => validateName(true)"
-                @input="() => validateName(false)"
-                v-model="formData.username"
-              />
+              <input type="text" class="form-control" id="username" @blur="() => validateName(true)"
+                @input="() => validateName(false)" v-model="formData.username" />
               <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
             </div>
 
@@ -154,26 +150,15 @@ const clearForm = () => {
           <div class="row mb-3">
             <div class="col-md-6 col-sm-6">
               <label for="password" class="form-label">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                @blur="() => validatePassword(true)"
-                @input="() => validatePassword(false)"
-                v-model="formData.password"
-              />
+              <input type="password" class="form-control" id="password" @blur="() => validatePassword(true)"
+                @input="() => validatePassword(false)" v-model="formData.password" />
               <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
             </div>
             <div class="col-md-6 col-sm-6">
               <label for="confirmPassword" class="form-label">Confirm password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-                @blur="() => validateConfirmPassword(true)"
-                @input="() => validateConfirmPassword(false)"
-                v-model="formData.confirmPassword"
-              />
+              <input type="password" class="form-control" id="confirmPassword"
+                @blur="() => validateConfirmPassword(true)" @input="() => validateConfirmPassword(false)"
+                v-model="formData.confirmPassword" />
               <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
             </div>
           </div>
@@ -181,12 +166,7 @@ const clearForm = () => {
           <div class="row mb-3">
             <div class="col-md-6 col-sm-6">
               <div class="form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="isAustralian"
-                  v-model="formData.isAustralian"
-                />
+                <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian" />
                 <label class="form-check-label" for="isAustralian">Australian Resident?</label>
               </div>
             </div>
@@ -194,14 +174,8 @@ const clearForm = () => {
 
           <div class="mb-3">
             <label for="reason" class="form-label">Reason for joining</label>
-            <textarea
-              class="form-control"
-              id="reason"
-              rows="3"
-              @blur="validateReason"
-              @input="validateReason"
-              v-model="formData.reason"
-            ></textarea>
+            <textarea class="form-control" id="reason" rows="3" @blur="validateReason" @input="validateReason"
+              v-model="formData.reason"></textarea>
             <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
             <div v-if="reasonMessage" class="text-success">{{ reasonMessage }}</div>
           </div>
@@ -228,12 +202,7 @@ const clearForm = () => {
 
   <div class="row mt-5" v-if="submittedCards.length">
     <div class="d-flex flex-wrap justify-content-start">
-      <div
-        v-for="(card, index) in submittedCards"
-        :key="index"
-        class="card m-2"
-        style="width: 18rem"
-      >
+      <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem">
         <div class="card-header">User Information</div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Username: {{ card.username }}</li>

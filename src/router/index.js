@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue';
 import FirebaseSigninView from '@/views/FirebaseSigninView.vue';
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue';
 import LogoutView from '@/views/LogoutView.vue';
+import AdminView from '@/views/AdminView.vue';
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/logout',
     name: 'Logout',
     component: LogoutView,
+  },
+  {
+    path: '/admin-dashboard',
+    name: 'AdminDashboard',
+    component: AdminView,
   },
 ];
 

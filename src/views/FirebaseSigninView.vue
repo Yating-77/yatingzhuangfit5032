@@ -26,17 +26,24 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 const auth = getAuth();
-
+const adminEmail = "admin@gmail.com"
 const signin = () => {
     signInWithEmailAndPassword(auth, email.value, password.value)
-        .then((data) => {
+        .then((userCredential) => {
             console.log("Firebase Signin Successful!");
-            console.log("User Data:", data.user);
-            console.log("Auth Current User:", auth.currentUser);
-            router.push("/");
+            console.log("User Data:", userCredential.user);
+
+            // Check if the user is an admin
+            if (userCredential.user.email === adminEmail) {
+                alert("Welcome Admin!");
+                router.push("/admin-dashboard");
+            } else {
+                router.push("/");
+            }
         })
         .catch((error) => {
-            console.log(error.code);
+            console.log("Login failed:", error.code);
+            alert("Login failed. Please check your credentials.");
         });
 };
 
