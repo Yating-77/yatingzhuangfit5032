@@ -22,6 +22,9 @@
         <li class="nav-item">
           <router-link to="/Logout" class="nav-link" active-class="active">Logout</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/Addbook" class="nav-link" active-class="active">Add book</router-link>
+        </li>
       </ul>
     </header>
   </div>
