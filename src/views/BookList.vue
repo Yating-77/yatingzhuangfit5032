@@ -25,11 +25,11 @@ const fetchBooks = async () => {
         const q = query(
             collection(db, 'books'),
             where('isbn', '>', 1000),
-            orderBy('isbn', 'desc'),
-            limit(10)
+            orderBy('isbn', 'desc')
         );
         const querySnapshot = await getDocs(q);
         books.value = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        console.log(books.value);
     } catch (error) {
         console.error('Error fetching books: ', error);
     }
@@ -43,6 +43,7 @@ const updateBook = async (book) => {
             name: book.name,
         });
         alert('Book updated successfully!');
+        fetchBooks();
     } catch (error) {
         console.error('Error updating book: ', error);
     }
