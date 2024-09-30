@@ -1,12 +1,27 @@
-<script setup>
+<script>
 import JSONLab from './components/JSONLab.vue'
 import BHeader from './components/BHeader.vue'
 import LibraryRegistrationForm from './views/HomeView.vue'
+import CountBookAPI from './views/CountBookAPI.vue';
+import GetAllBookAPI from './views/GetAllBookAPI.vue';
 
+export default {
+  name: 'App',
+  components: {
+    BHeader,
+    CountBookAPI,
+    GetAllBookAPI
+  },
+  computed: {
+    showHeader() {
+      return true;
+    }
+  }
+};
 </script>
 
 <template>
-  <header>
+  <header v-if="showHeader">
     <BHeader />
   </header>
 
