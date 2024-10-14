@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -81,16 +80,11 @@
     </div>
 </template>
 
-
-
-
 <script setup>
 import { ref } from 'vue';
-// import { z } from 'zod'; // Import Zod
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-// import { ref, computed } from 'vue';
-const users = ref([]);
+
 const formData = ref({
     username: '',
     password: '',
@@ -100,7 +94,6 @@ const formData = ref({
 });
 
 const submittedCards = ref([]);
-
 
 const submitForm = () => {
     validateName(true);
@@ -119,27 +112,25 @@ const submitForm = () => {
             gender: formData.value.gender,
             reason: formData.value.reason
         });
-        console.log(submittedCards.value); // Add this line to check the content of users array
         clearForm();
     }
 };
+
 const clearForm = () => {
     formData.value.username = '';
     formData.value.password = '';
     formData.value.isAustralian = false;
     formData.value.reason = '';
     formData.value.gender = '';
-    formData.value.email = '';
-
 };
 
 const errors = ref({
     username: null,
     password: null,
-    resident: null,
+    isAustralian: null,
     gender: null,
-    reason: null,
-})
+    reason: null
+});
 
 const validateName = (blur) => {
     if (formData.value.username.length < 3) {
@@ -147,7 +138,7 @@ const validateName = (blur) => {
     } else {
         errors.value.username = null;
     }
-}
+};
 
 const validatePassword = (blur) => {
     const password = formData.value.password;
@@ -217,24 +208,18 @@ const validateReason = (blur) => {
 
 /* Media Queries */
 @media screen and (min-width: 1024px) {
-
-    /* Desktop */
     .container {
         max-width: 80%;
     }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-
-    /* Tablet */
     .container {
         max-width: 90%;
     }
 }
 
 @media screen and (max-width: 767px) {
-
-    /* Smartphone */
     .container {
         max-width: 100%;
         padding: 0 10px;
@@ -245,15 +230,3 @@ const validateReason = (blur) => {
     }
 }
 </style>
-=======
-    <div>
-        <h1>User Information Form / Credentials</h1>
-    </div>
-</template>
-
-<script setup>
-// Our logic will go here
-</script>
-
-<style scoped></style>
->>>>>>> d38e50d (Adding LoginForm.vue -  Week 3 Activity1)
