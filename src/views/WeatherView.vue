@@ -14,8 +14,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Main content area displaying weather information -->
     <main v-if="weatherData" class="d-flex justify-content-center mt-4">
         <div class="text-center">
             <h2>{{ weatherData.name }}, {{ weatherData.sys.country }}</h2>
