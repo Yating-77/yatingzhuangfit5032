@@ -26,7 +26,6 @@ export default {
   </header>
 
   <main>
-    <!-- <LibraryRegistrationForm /> -->
     <!-- <JSONLab /> -->
     <router-view></router-view>
   </main>
