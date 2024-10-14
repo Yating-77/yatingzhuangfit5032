@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -244,3 +245,15 @@ const validateReason = (blur) => {
     }
 }
 </style>
+=======
+    <div>
+        <h1>User Information Form / Credentials</h1>
+    </div>
+</template>
+
+<script setup>
+// Our logic will go here
+</script>
+
+<style scoped></style>
+>>>>>>> d38e50d (Adding LoginForm.vue -  Week 3 Activity1)
