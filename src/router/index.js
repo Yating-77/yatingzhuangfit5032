@@ -1,3 +1,6 @@
+// 删除重复的导入
+// import { createRouter, createWebHistory } from 'vue-router'; // <-- 重复的导入
+
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
@@ -11,10 +14,9 @@ import GetBookCountView from '@/views/GetBookCountView.vue';
 import WeatherCheck from '@/views/WeatherView.vue';
 import CountBookAPI from '@/views/CountBookAPI.vue';
 import GetAllBookAPI from '@/views/GetAllBookAPI.vue';
-import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL), // 使用 Vite 环境变量
   routes: [
     {
       path: '/',
@@ -78,8 +80,7 @@ const router = createRouter({
       component: GetAllBookAPI,
     },
   ]
-})
-
+});
 
 // Global Navigation Guard
 router.beforeEach((to, from, next) => {
